@@ -6,8 +6,8 @@ train:
     AmplitudeToDB:
   vision:
     Resize: 
-      - 224
-      - 224
+      - 256
+      - 256
 
 val:
   audio:
@@ -17,8 +17,8 @@ val:
     AmplitudeToDB:
   vision:
     Resize: 
-      - 224
-      - 224
+      - 256
+      - 256
 
 test:
   audio:
@@ -28,8 +28,8 @@ test:
     AmplitudeToDB:
   vision:
     Resize: 
-      - 224
-      - 224
+      - 256
+      - 256
 
 predict:
   audio:
@@ -39,5 +39,5 @@ predict:
     AmplitudeToDB:
   vision:
     Resize: 
-      - 224
-      - 224
+      - 256
+      - 256
