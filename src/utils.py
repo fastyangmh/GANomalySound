@@ -96,3 +96,11 @@ def pad_waveform(waveform, max_waveform_length):
     pad = (int(np.ceil(diff/2)), int(np.floor(diff/2)))
     waveform = F.pad(input=waveform, pad=pad)
     return waveform
+
+
+def load_checkpoint(model, use_cuda, checkpoint_path):
+    map_location = torch.device(
+        device='cuda') if use_cuda else torch.device(device='cpu')
+    checkpoint = torch.load(f=checkpoint_path, map_location=map_location)
+    model.load_state_dict(checkpoint['state_dict'])
+    return model

@@ -52,6 +52,26 @@ class ProjectParameters:
         self._parser.add_argument(
             '--max_files', type=self._str_to_int, default=None, help='the maximum number of files for loading files.')
 
+        # model
+        self._parser.add_argument('--checkpoint_path', type=str, default=None,
+                                  help='the path of the pre-trained model checkpoint.')
+        self._parser.add_argument('--optimizer_config_path', type=str,
+                                  default='config/optimizer.yaml', help='the optimizer config path.')
+        self._parser.add_argument(
+            '--latent_size', type=int, default=100, help='size of the latent z vector.')
+        self._parser.add_argument(
+            '--discriminator_features', type=int, default=64, help='number of features of the discriminator network.')
+        self._parser.add_argument(
+            '--generator_features', type=int, default=64, help='number of features of the generator network.')
+        self._parser.add_argument(
+            '--adversarial_weight', type=float, default=1, help='adversarial loss weight.')
+        self._parser.add_argument(
+            '--reconstruction_weight', type=float, default=50, help='reconstruction loss weight.')
+        self._parser.add_argument(
+            '--encoder_weight', type=float, default=1, help='encoder loss weight.')
+        self._parser.add_argument('--feature_size', type=int, default=256, required=True,
+                                  help='the input image size. if you have set resize transform, please set the image size to the same value as resize in transform.yaml. note that the input image must be equal in height and width.')
+
     def _str_to_int(self, s):
         return None if s == 'None' or s == 'none' else int(s)
 
@@ -105,6 +125,10 @@ class ProjectParameters:
         if project_parameters.sox_effect_config_path is not None:
             project_parameters.sox_effect_config_path = abspath(
                 project_parameters.sox_effect_config_path)
+
+        # model
+        project_parameters.optimizer_config_path = abspath(
+            project_parameters.optimizer_config_path)
 
         return project_parameters
 
