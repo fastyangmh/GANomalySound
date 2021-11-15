@@ -92,6 +92,12 @@ class ProjectParameters:
         self._parser.add_argument('--weights_summary', type=str, default=None, choices=[
                                   'top', 'full'], help='prints a summary of the weights when training begins.')
 
+        # predict
+        self._parser.add_argument('--gui', action='store_true', default=False,
+                                  help='whether to use the gui window while predicting.')
+        self._parser.add_argument(
+            '--threshold', type=float, default=0.2, help='the anomaly score threshold.')
+
     def _str_to_int(self, s):
         return None if s == 'None' or s == 'none' else int(s)
 
@@ -153,6 +159,9 @@ class ProjectParameters:
         # train
         if project_parameters.val_iter is None:
             project_parameters.val_iter = project_parameters.train_iter
+
+        # predict
+        project_parameters.use_gui = project_parameters.gui
 
         return project_parameters
 
