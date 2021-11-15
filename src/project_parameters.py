@@ -72,6 +72,26 @@ class ProjectParameters:
         self._parser.add_argument('--feature_size', type=int, default=256, required=True,
                                   help='the input image size. if you have set resize transform, please set the image size to the same value as resize in transform.yaml. note that the input image must be equal in height and width.')
 
+        # train
+        self._parser.add_argument('--val_iter', type=self._str_to_int, default=1,
+                                  help='the number of validation iteration. if set None, the val_iter will set the same as train_iter.')
+        self._parser.add_argument(
+            '--lr', type=float, default=1e-3, help='the learning rate.')
+        self._parser.add_argument(
+            '--train_iter', type=int, default=100, help='the number of training iteration.')
+        self._parser.add_argument('--lr_scheduler', type=str, default='CosineAnnealingLR', choices=[
+                                  'StepLR', 'CosineAnnealingLR'], help='the lr scheduler while training model.')
+        self._parser.add_argument(
+            '--step_size', type=int, default=10, help='period of learning rate decay.')
+        self._parser.add_argument('--gamma', type=int, default=0.1,
+                                  help='multiplicative factor of learning rate decay.')
+        self._parser.add_argument('--precision', type=int, default=32, choices=[
+                                  16, 32], help='full precision (32) or half precision (16). Can be used on CPU, GPU or TPUs.')
+        self._parser.add_argument('--profiler', type=str, default=None, choices=[
+            'simple', 'advanced'], help='to profile individual steps during training and assist in identifying bottlenecks.')
+        self._parser.add_argument('--weights_summary', type=str, default=None, choices=[
+                                  'top', 'full'], help='prints a summary of the weights when training begins.')
+
     def _str_to_int(self, s):
         return None if s == 'None' or s == 'none' else int(s)
 
@@ -129,6 +149,10 @@ class ProjectParameters:
         # model
         project_parameters.optimizer_config_path = abspath(
             project_parameters.optimizer_config_path)
+
+        # train
+        if project_parameters.val_iter is None:
+            project_parameters.val_iter = project_parameters.train_iter
 
         return project_parameters
 
