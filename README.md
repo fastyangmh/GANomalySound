@@ -1,1 +1,1 @@
-# GANomalySound
+# SoundGANomaly
