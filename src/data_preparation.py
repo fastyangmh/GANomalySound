@@ -25,6 +25,7 @@ class SPEECHCOMMANDS(SPEECHCOMMANDS):
             self._walker = [f for f in self._walker if self.normal_class in f]
         elif subset == 'validation':
             self.stage = 'val'
+            self._walker = [f for f in self._walker if self.normal_class in f]
         elif subset == 'testing':
             self.stage = 'test'
 
